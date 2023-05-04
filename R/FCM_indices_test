@@ -1,0 +1,90 @@
+#' Fuzzy clusters (FCM) partition tests over increasing number of groups.
+#'
+#' @description This function provides an easy way to run 
+#'     partition tests (using fuzzy partition indices, and the 
+#'     [cascadeFCM()] function) on data, for the purpose 
+#'     of determining the most adequate number of groups for 
+#'     fuzzy clustering algorithm (FCM). 
+#'
+#' @param The data matrix. The objects (samples) are the rows.
+#' @param inf.gr The number of groups for the partition with the 
+#'     smallest number of groups of the cascade (min).
+#' @param sup.gr The number of groups for the partition with the 
+#'     largest number of groups of the cascade (max).
+#' @param iter The number of random starting configurations for each 
+#'     value of k.
+#' @param criterion The criterion that will be used to select the 
+#'     fuzzy best partition. These are taken from the 
+#'     [vegclust::vegclustIndex()] function of the vegclust package 
+#'     (see Details)
+#' @param cluster.method Clustering method to be used. Must be
+#'     accepted by vegclust (see Details)
+#' @param iter.max Maximum number of iterations for the 
+#'     clustering algorithm.
+#' @param run Number of runs to perform for each value of k. 
+#' @param GGready Logical. Should the returned data be melted 
+#'     for easy plotting using ggplot2.
+#' @param ... Additional arguments to be passed to the 
+#'     [vegclust::vegclust()] function. Typically includes 
+#'     the membership exponent m (defaulted to 2 by the 
+#'     vegclust function).
+#'
+#'#' @details This function is essentially an extension of the 
+#'     [vegan::cascadeKM()] function of the vegan package for fuzzy 
+#'     clustering methods. Its functioning is kept identical. 
+#'     The range of indices it accepts to select the best
+#'     partition is, however, taken from fuzzy partition indices, 
+#'     such as the ones coming from Fuzzy C-means (Bezdek 1981).
+#'     It currently returns one of our values: partition 
+#'     coefficient (PC), normalized partition coefficient (PCN), 
+#'     partition entropy (PE) and normalized partition entropy (PEN).
+#'     Maximum values of PCN or minimum values of PEN can be 
+#'     used as criteria to choose the number of clusters.
+#'     
+#'     The function defaults to "FCM" for the fuzzy cluster algorithm,
+#'     but can accept any of the algorithms implemented in the 
+#'     original vegclust function, so long as they are compatible with
+#'     the calculation of the fuzzy partition indices. 
+#'
+#' @return A dataframe containing the results of the tests.
+#' 
+#' @export
+#'
+#' @examples
+#' # Partitioning a (10 x 10) data matrix of random numbers
+#'  mat <- matrix(runif(100),10,10)
+#'  # With minimalist group range, iterations, and number of runs.
+#'  Tests <- FCM_indices_test(mat, 2, 10, iter = 50,
+#'                            criterion = "PC", cluster.method = "FCM",
+#'                            run = 10,
+#'                            GGready = T)
+#'  
+#'  # Associated plot (as in Pav\~{a}o et al., 2019):
+#'  ggplot(Tests, aes(x = Groups, y = value)) +
+#'      geom_boxplot() +
+#'      geom_smooth(aes(x = as.numeric(Groups), y = value)) +
+#'      ggtitle("Evolution of the PC \n over increasing number of groups (k)") +
+#'      ylab("Partition coefficient (PC)") +
+#'      theme_bw() +
+#'      theme(plot.title = element_text(hjust = 0.5))
+#'      
+FCM_indices_test <- function(data, inf.gr, sup.gr, iter = 100, criterion = c("PC", "PCN", "PE", "PEN"),
+                             cluster.method = "FCM", iter.max = 100, run, GGready = T, ...) 
+{
+  Indices_tests <- data.frame(matrix(NA, nrow = run, ncol = sup.gr-1,
+                                dimnames = list(1:run, 2:sup.gr)))
+  for (i in 1:run) {
+    withr::with_seed(i,
+                     Partition <- cascadeFCM(data, inf.gr = inf.gr, sup.gr = sup.gr, 
+                                             iter = iter, criterion = criterion,
+                                             cluster.method = cluster.method,
+                                             iter.max = iter.max, ...)
+    )
+    Indices_tests[i,] <- as.numeric(Partition$results[2,]) 
+  }
+  colnames(Indices_tests) <- inf.gr:sup.gr
+  if (GGready) {
+    Indices_tests <- suppressMessages(reshape::melt(Indices_tests, variable_name = "Groups"))
+  }
+  return(Indices_tests)
+}
