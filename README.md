@@ -1,7 +1,7 @@
 # Exploring data partitions for k-means and Fuzzy-c-means clustering:
-One of the recurrent -- and vexing -- problems of ecology is the decision regarding the most adequate number of groups for clustering multivariate data. I already provided some functions (making use of heatmaps and networks) to facilitate this process in the `EcotoneFinder` package. \
+One of the recurrent – and vexing – problems of ecology is the decision regarding the most adequate number of groups for clustering multivariate data. I already provided some functions (making use of heatmaps and networks) to facilitate this process in the `EcotoneFinder` package. \
 Here I present another set of analyses that may be used to the same effect, using different partition indices and, particularly, their evolution when the data are subjected to segmentation by increasing number of groups. \
-The initial idea for these functions came from a figure in a publication by Pav&atilde;o et.al, 2019 -- which I intended to reproduce for my own data -- and the extension of this protocol from k-means clustering to the fuzzy-c-means clustering I was using at the time.
+The initial idea for these functions came from a figure in a publication by Pav&atilde;o et.al, 2019 [[1]](#1) – which I intended to reproduce for my own data – and the extension of this protocol from k-means clustering to the fuzzy-c-means clustering I was using at the time.
 
 ## Provided functions:
 Three functions are currently in the repository:
@@ -25,15 +25,21 @@ The associated heatmap and networks (`qgraph`, running a spinglass algorithm to 
 <img src = "./Network.png" height = 30% width = 30%>
 </p>
 
-Now -- running the `KMeans_indices_test` on the same data -- we obtain an optimum at $n = 5$ groups instead of $n = 3$. This may correspond to the ecotonal communities (i.e. three communities plus two ecotones).
+Now – running the `KMeans_indices_test` on the same data – we obtain an optimum at $n = 5$ groups instead of $n = 3$. This may correspond to the ecotonal communities (i.e. three communities plus two ecotones).
 
 <p align="center">
 <img src = "./SSI.png" height = 60% width = 60%>
 </p>
 
-The use of fuzzy indices (and thus, fuzzy clusters) -- using the `FCM_indices_test` -- now finds back the $n = 3$ optimum, although $n = 5$ still seems a reasonably good solution.
+The use of fuzzy indices (and thus, fuzzy clusters) – using the `FCM_indices_test` – now finds back the $n = 3$ optimum, although $n = 5$ still seems a reasonably good solution.
 
 <p align="center">
 <img src = "./PCN.png" height = 60% width = 60%>
 </p>
+
+### References:
+<a id="1">[1]</a> 
+Pavão DC, Elias RB, Silva L (2019) Comparison of discrete and continuum community models: Insights from numerical ecology and Bayesian methods applied to Azorean plant communities. Ecological Modelling 402:93–106 *doi:10.1016/j.ecolmodel.2019.03.021*\
+
+
 
