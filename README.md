@@ -39,7 +39,8 @@ The use of fuzzy indices (and thus, fuzzy clusters) – using the `FCM_indices_t
 
 ### References:
 <a id="1">[1]</a> 
-Pavão DC, Elias RB, Silva L (2019) Comparison of discrete and continuum community models: Insights from numerical ecology and Bayesian methods applied to Azorean plant communities. Ecological Modelling 402:93–106 *doi:10.1016/j.ecolmodel.2019.03.021*\
+Pavão DC, Elias RB, Silva L (2019) Comparison of discrete and continuum community models: Insights from numerical ecology and Bayesian methods applied to Azorean plant communities. Ecological Modelling 402:93–106 *doi:10.1016/j.ecolmodel.2019.03.021*
+
 
 
 
