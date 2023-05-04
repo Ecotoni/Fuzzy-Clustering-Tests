@@ -18,7 +18,7 @@ Considering the artificial data presented bellow, and provided in this repositor
 <img src = "./TestCommunities.png" height = 60% width = 60%>
 </p>
 
-The associated heatmap and networks (`qgraph`, running a spinglass algorithm to determine statistical communities in the network) both highlight three main groups, either as "squares" of more closely related species along the diagonal of the heatmap, or as groups of related nodes. This correctly describes the three main communities in the artificial data.\
+The associated heatmap and networks (`qgraph`, running a spinglass algorithm to determine statistical communities in the network) both highlight three main groups, either as "squares" of more closely related species along the diagonal of the heatmap, or as groups of related nodes. This correctly describes the three main communities in the artificial data.
 
 <p align="center">
 <img src = "./Heatmap.png" height = 30% width = 30%>
