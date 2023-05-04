@@ -15,25 +15,25 @@ All these functions might eventually be integrated in future versions of the `Ec
 Considering the artificial data presented bellow, and provided in this repository:
 
 <p align="center">
-<img src = "./TestCommunities.pdf" height = 60% width = 60%>
+<img src = "./TestCommunities.png" height = 60% width = 60%>
 </p>
 
 The associated heatmap and networks (`qgraph`, running a spinglass algorithm to determine statistical communities in the network) both highlight three main groups, either as "squares" of more closely related species along the diagonal of the heatmap, or as groups of related nodes. This correctly describes the three main communities in the artificial data.\
 
 <p align="center">
-<img src = "./Heatmap.pdf.pdf" height = 30% width = 30%>
-<img src = "./Network.pdf.pdf" height = 30% width = 30%>
+<img src = "./Heatmap.pdf.png" height = 30% width = 30%>
+<img src = "./Network.pdf.png" height = 30% width = 30%>
 </p>
 
 Now -- running the `KMeans_indices_test` on the same data -- we obtain an optimum at $n = 5$ groups instead of $n = 3$. This may correspond to the ecotonal communities (i.e. three communities plus two ecotones).
 
 <p align="center">
-<img src = "./SSI.pdf.pdf" height = 60% width = 60%>
+<img src = "./SSI.pdf.png" height = 60% width = 60%>
 </p>
 
 The use of fuzzy indices (and thus, fuzzy clusters) -- using the `FCM_indices_test` -- now finds back the $n = 3$ optimum, although $n = 5$ still seems a reasonably good solution.
 
 <p align="center">
-<img src = "./PCN.pdf.pdf" height = 60% width = 60%>
+<img src = "./PCN.pdf.png" height = 60% width = 60%>
 </p>
 
