@@ -1,0 +1,63 @@
+### Basic function using kmeans clustering:
+
+#' K-means partition tests over increasing number of groups.
+#' 
+#' @description This function provides an easy way to run 
+#'     partition tests (using partition indices, and the 
+#'     [vegan::cascadeKM()] function) on data, for the purpose 
+#'     of determining the most adequate number of groups for 
+#'     k-means clustering. 
+#' 
+#' @param data The data matrix. The objects (samples) are the rows.
+#' @param inf.gr The number of groups for the partition with the 
+#'     smallest number of groups of the cascade (min).
+#' @param sup.gr The number of groups for the partition with the 
+#'     largest number of groups of the cascade (max).
+#' @param iter The number of random starting configurations for each 
+#'     value of K.
+#' @param criterion The criterion that will be used to select the 
+#'     best partition. Either "calinski" or "ssi". See 
+#'     [vegan::cascadeKM()] for details.
+#' @param run Number of runs to perform for each value of k. 
+#' @param GGready Logical. Should the returned data be melted 
+#'     for easy plotting using ggplot2.
+#'
+#' @return A dataframe containing the results of the tests.
+#' 
+#' @export
+#'
+#' @examples
+#'  # Partitioning a (10 x 10) data matrix of random numbers
+#'  mat <- matrix(runif(100),10,10)
+#'  # With minimalist group range, iterations, and number of runs.
+#'  Tests <- KMeans_indices_test(mat, 2, 10, iter = 50,
+#'                               criterion = "ssi", run = 10,
+#'                               GGready = T)
+#'  
+#'  # Associated plot (as in Pav\~{a}o et al., 2019):
+#'  ggplot(Tests, aes(x = Groups, y = value)) +
+#'      geom_boxplot() +
+#'      geom_smooth(aes(x = as.numeric(Groups), y = value)) +
+#'      ggtitle("Evolution of the ssi \n over increasing number of groups (k)") +
+#'      ylab("ssi") +
+#'      theme_bw() +
+#'      theme(plot.title = element_text(hjust = 0.5))
+#' 
+KMeans_indices_test <- function(data, inf.gr, sup.gr, iter = 100, criterion, run,
+                           GGready = T) 
+{
+  Indices_tests <- data.frame(matrix(NA, nrow = run, ncol = sup.gr-1,
+                                dimnames = list(1:run, 2:sup.gr)))
+  for (i in 1:run) {
+    withr::with_seed(i,
+                     Partition <- vegan::cascadeKM(data, inf.gr = inf.gr, sup.gr = sup.gr, 
+                                                   iter = iter, criterion = criterion)
+    )
+    Indices_tests[i,] <- as.numeric(Partition$results[2,]) 
+  }
+  colnames(Indices_tests) <- inf.gr:sup.gr
+  if (GGready) {
+    Indices_tests <- suppressMessages(reshape::melt(Indices_tests, variable_name = "Groups"))
+  }
+  return(Indices_tests)
+}
