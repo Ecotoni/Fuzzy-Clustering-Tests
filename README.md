@@ -1,13 +1,13 @@
 # Exploring data partitions for k-means and Fuzzy-c-means clustering:
 One of the recurrent -- and vexing -- problems of ecology is the decision regarding the most adequate number of groups for clustering multivariate data. I already provided some functions (making use of heatmaps and networks) to facilitate this process in the `EcotoneFinder` package. \
 Here I present another set of analyses that may be used to the same effect, using different partition indices and, particularly, their evolution when the data are subjected to segmentation by increasing number of groups. \
-The initial idea for these functions came from a figure in a publication by Pav\~{a}o et.al, 2019 -- which I intended to reproduce for my own data -- and the extension of this protocol from k-means clustering to the fuzzy-c-means clustering I was using at the time.
+The initial idea for these functions came from a figure in a publication by Pav&atilde;o et.al, 2019 -- which I intended to reproduce for my own data -- and the extension of this protocol from k-means clustering to the fuzzy-c-means clustering I was using at the time.
 
 ## Provided functions:
 Three functions are currently in the repository:
 1. `cascadeFCM`: and extension of the `vegan::cascadeKM` for fuzzy-c-means clustering.
-2. `KMeans_indices_test` to produce the data needed to draw a plot similar to the one in Pav\~{a}o et. al, 2019, with k-means clustering.
-3. `FCM_indices_test` to produce the data needed to draw a plot similar to the one in Pav\~{a}o et. al, 2019, with fuzzy-c-means clustering.
+2. `KMeans_indices_test` to produce the data needed to draw a plot similar to the one in Pav&atilde;o et. al, 2019, with k-means clustering.
+3. `FCM_indices_test` to produce the data needed to draw a plot similar to the one in Pav&atilde;o et. al, 2019, with fuzzy-c-means clustering.
 
 All these functions might eventually be integrated in future versions of the `EcotoneFinder`package.
 
